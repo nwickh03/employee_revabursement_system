@@ -42,7 +42,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/admin/**").hasAuthority("ADMIN")
                 .antMatchers("/anonymous*").anonymous()
-                .antMatchers("/users/authenticate*", "/users*").permitAll()
+                .antMatchers("/users/authenticate*", "/users/**").permitAll()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
                 .anyRequest().authenticated()
                 .and()
@@ -70,7 +70,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    public void configure(WebSecurity web) throws Exception {
+    public void configure(WebSecurity web){
         // let pipeline check health without logging on
         web.ignoring().antMatchers("/health_check");
     }
