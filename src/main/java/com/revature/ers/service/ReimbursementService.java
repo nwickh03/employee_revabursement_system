@@ -45,6 +45,20 @@ public class ReimbursementService {
         return reimbursements.map((reimbursement -> modelMapper.map(reimbursement, ReimbursementDTO.class)));
     }
 
+    public Page<ReimbursementDTO> getAllReimbursementsByUser(int page, int offset, String sortBy, String order, int id) {
+        page = pageValidation(page);
+        sortBy = sortByValidation(sortBy);
+        offset = offsetValidation(offset);
+
+        Page<Reimbursement> reimbursements;
+
+        if(order.equalsIgnoreCase("DESC"))
+            reimbursements = reimbursementRepository.findByAuthorId(id,PageRequest.of(page, offset,Sort.by(sortBy).descending()));
+        else
+            reimbursements = reimbursementRepository.findByAuthorId(id,PageRequest.of(page, offset,Sort.by(sortBy).ascending()));
+        return reimbursements.map((reimbursement -> modelMapper.map(reimbursement, ReimbursementDTO.class)));
+    }
+
     public ReimbursementDTO getReimbursementById(int id){
         return modelMapper.map(reimbursementRepository.findById(id).orElse(null),ReimbursementDTO.class);
     }
