@@ -26,6 +26,14 @@ public class ReimbursementController {
                                                        @RequestParam(value = "order", required = false, defaultValue = "ASC") String order){
         return reimbursementService.getAllReimbursements(page, offset, sortBy, order);
     }
+    @GetMapping("/user/{id}")
+    public Page<ReimbursementDTO> getReimbursementsByUser(@RequestParam(value = "page", required = false, defaultValue = "0") int page,
+                                                           @RequestParam(value = "offset", required = false, defaultValue = "25") int offset,
+                                                           @RequestParam(value = "sort", required = false, defaultValue = "id") String sortBy,
+                                                           @RequestParam(value = "order", required = false, defaultValue = "ASC") String order,
+                                                           @PathVariable(name= "id") int id ){
+        return reimbursementService.getAllReimbursementsByUser(page, offset, sortBy, order, id);
+    }
 
     @GetMapping("/{id}")
     public ReimbursementDTO getByReimbursementId(@PathVariable(name = "id") String id){
